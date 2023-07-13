@@ -10,3 +10,15 @@
 .heading h3 {
     display: inline;
 }
+
+#Instructions {
+    float: right;
+}
+
+.modal-body {
+    text-align: left;
+}
+
+.modal-content {
+    width: 45%;
+}

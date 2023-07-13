@@ -1,4 +1,6 @@
-
+right_wristX = "";
+right_wristY = "";
+right_wrist_score = "";
 
 var paddle2 = 10, paddle1 = 10;
 
@@ -22,12 +24,38 @@ var ball = {
 
 function setup() {
   var canvas = createCanvas(700, 600);
+  canvas.parent('canvas');
+
+  video = createCapture(VIDEO);
+  video.size(700, 600);
+  video.hide();
+
+  poseNet = ml5.poseNet(video, modelLoaded);
+  poseNet.on('pose', gotPoses);
 }
 
+function modelLoaded() {
+  console.log("Posenet is initialised");
+
+}
+
+function gotPoses(results) {
+  if (results.length > 0) {
+    console.log(results);
+    right_wristX = results[0].pose.rightWrist.x;
+    right_wristY = results[0].pose.rightWrist.y;
+  }
+}
 
 function draw() {
 
-  background(0);
+  image(video, 0, 0, 700, 600);
+
+  if (right_wrist_score > 0.2) {
+    fill("red");
+    stroke("black");
+    circle(200, 100, 150);
+  }
 
   fill("black");
   stroke("black");
