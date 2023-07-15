@@ -2,6 +2,7 @@ right_wristX = "";
 right_wristY = "";
 right_wrist_score = "";
 
+
 var paddle2 = 10, paddle1 = 10;
 
 var paddle1X = 10, paddle1Height = 110;
@@ -25,6 +26,7 @@ var ball = {
 function setup() {
   var canvas = createCanvas(700, 600);
   canvas.parent('canvas');
+  game_status = "";
 
   video = createCapture(VIDEO);
   video.size(700, 600);
@@ -33,6 +35,13 @@ function setup() {
   poseNet = ml5.poseNet(video, modelLoaded);
   poseNet.on('pose', gotPoses);
 }
+
+function startgame(){
+  game_status = "start";
+  document.getElementById("status").innerHTML = "Game is loaded";
+}
+
+
 
 function modelLoaded() {
   console.log("Posenet is initialised");
@@ -47,9 +56,20 @@ function gotPoses(results) {
   }
 }
 
+function preload(){
+  ball_touch_paddel = loadSound("ball_touch_paddel.wav");
+  missed = loadSound("missed.wav");
+}
+
 function draw() {
 
   image(video, 0, 0, 700, 600);
+
+
+  if(game_status == "start"){
+
+  }
+
 
   if (right_wrist_score > 0.2) {
     fill("red");
